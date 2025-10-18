@@ -1,0 +1,41 @@
+Here are important data structures similar to HashMap, grouped and described briefly so you can pick the right one for a use‑case.
+
+Java Map implementations (JDK)
+
+HashMap — unsorted, average O(1) get/put, allows one null key and null values; not thread-safe.
+LinkedHashMap — HashMap + insertion- or access-order iteration; useful for LRU caches.
+TreeMap — Red‑Black tree; sorted keys, O(log n) get/put; implements SortedMap/NavigableMap.
+Hashtable — legacy synchronized hash table; thread-safe but usually replaced by ConcurrentHashMap.
+ConcurrentHashMap — concurrent, highly scalable hash table for multithreaded access (no null keys/values).
+ConcurrentSkipListMap — concurrent sorted map based on skip list; O(log n), thread-safe.
+WeakHashMap — keys are weakly referenced and removed by GC when no strong refs exist; useful for caches.
+IdentityHashMap — uses reference equality (==) for keys instead of equals(); niche use.
+EnumMap — efficient map for enum keys (array-backed).
+Collections.synchronizedMap(Map) — wrapper to make any map thread-safe via synchronization.
+Multimap / specialized maps (collections libraries)
+
+Multimap (Guava / Apache) — key → multiple values (one key maps to a collection).
+BiMap (Guava) — bijective map with fast inverse lookup (unique values).
+Table (Guava) — 2D map: rowKey × columnKey → value.
+Cache (Caffeine, Guava Cache) — maps with eviction, TTL, and stats (for caching patterns).
+General associative data structures (broader CS)
+
+Hash table — general concept behind HashMap; many hashing strategies (open addressing, chaining).
+Balanced BSTs (AVL, Red‑Black) — ordered maps, O(log n) ops.
+Skip list — probabilistic ordered structure; used for concurrent sorted maps.
+Trie (prefix tree) — associative for strings/prefixes; fast prefix search.
+Radix tree / compact trie — space-efficient string-keyed map.
+B-tree / B+ tree — disk-friendly ordered map for databases and filesystems.
+Cuckoo hashing, Hopscotch hashing — alternative hash-table collision strategies for high performance.
+LSM-tree — write-optimized key-value structure used in storage systems (RocksDB, LevelDB).
+Bloom filter / Cuckoo filter — probabilistic membership test (not full map, often paired with a map to avoid disk access).
+When to choose which:
+
+Need ordering -> TreeMap / skip list.
+Need predictable iteration order / LRU -> LinkedHashMap.
+Multithreaded, high concurrency -> ConcurrentHashMap or ConcurrentSkipListMap.
+Memory-sensitive keys -> WeakHashMap.
+Keys are enums -> EnumMap.
+Need key → multiple values -> Multimap.
+Need prefix queries or string-heavy keys -> Trie/Radix tree.
+Large-scale storage or write-heavy -> LSM-tree or B-tree variants.
